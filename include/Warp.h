@@ -256,13 +256,14 @@ class Warp : public std::enable_shared_from_this<Warp> {
 
 	virtual void resize();
 	virtual void resize( const ci::ivec2 &size );
-
+	
+	const uint32_t getId() const { return mId; }
   protected:
 	//! Draw the warp and its editing interface.
 	virtual void draw( bool controls = true ) = 0;
 	//! Draw the control points.
 	void drawControlPoints();
-
+	void setId( const uint32_t id ) { mId = id; }
   protected:
 	WarpType mType;
 
@@ -319,6 +320,9 @@ class Warp : public std::enable_shared_from_this<Warp> {
 	static std::atomic<bool> sIsEditMode;
 	//! Gamma mode for all warps.
 	static std::atomic<bool> sIsGammaMode;
+	
+	//> Warp id
+	uint32_t mId { 0 };
 };
 
 // ----------------------------------------------------------------------------------------------------------------
