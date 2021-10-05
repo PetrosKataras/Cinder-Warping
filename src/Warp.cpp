@@ -160,8 +160,10 @@ XmlTree Warp::toXml() const
 		edges.setTag( "edges" );
 		edges.setAttribute( "left", mEdges.x );
 		edges.setAttribute( "top", mEdges.y );
-		edges.setAttribute( "right", mEdges.z );
-		edges.setAttribute( "bottom", mEdges.w );
+		auto right = glm::clamp( 1.0f - mEdges.z, 0.0f, 1.0f );
+		auto bottom = glm::clamp( 1.0f - mEdges.w, 0.0f, 1.0f );
+		edges.setAttribute( "right", right );
+		edges.setAttribute( "bottom", bottom );
 		blend.push_back( edges );
 
 		XmlTree gamma;
