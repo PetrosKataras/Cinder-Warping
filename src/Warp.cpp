@@ -45,7 +45,7 @@ Warp::Warp( WarpType type )
 	, mControlsY( 2 )
 	, mLuminance( 0.5f )
 	, mGamma( 1.0f )
-	, mEdges( 0.0f, 0.0f, 1.0f, 1.0f )
+	, mEdges( 0.0f, 0.0f, 0.0f, 0.0f )
 	, mExponent( 2.0f )
 	, mSelectedTime( 0 )
 {
@@ -204,10 +204,14 @@ void Warp::fromXml( const XmlTree &xml )
 
 		auto edges = blend->find( "edges" );
 		if( edges != blend->end() ) {
-			mEdges.x = edges->getAttributeValue<float>( "left", mEdges.x );
-			mEdges.y = edges->getAttributeValue<float>( "top", mEdges.y );
-			mEdges.z = edges->getAttributeValue<float>( "right", mEdges.z );
-			mEdges.w = edges->getAttributeValue<float>( "bottom", mEdges.w );
+			auto left = edges->getAttributeValue<float>( "left", mEdges.x );
+			auto top = edges->getAttributeValue<float>( "top", mEdges.y );
+			auto right = edges->getAttributeValue<float>( "right", mEdges.z );
+			auto bottom = edges->getAttributeValue<float>( "bottom", mEdges.w );
+			mEdges.x = glm::clamp( left, 0.0f, 1.0f );
+			mEdges.y = glm::clamp( top, 0.0f, 1.0f );
+			mEdges.z = glm::clamp( 1.0f - right, 0.0f, 1.0f );
+			mEdges.w = glm::clamp( 1.0f - bottom, 0.0f, 1.0f );
 		}
 
 		auto gamma = blend->find( "gamma" );
