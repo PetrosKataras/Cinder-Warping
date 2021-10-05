@@ -26,4 +26,10 @@ if ( NOT TARGET Cinder-Warping )
 	endif()
 
 	target_link_libraries( Cinder-Warping PRIVATE cinder )
+	set_target_properties(Cinder-Warping
+    PROPERTIES
+        CXX_STANDARD 17
+        CXX_STANDARD_REQUIRED YES
+        CXX_EXTENSIONS NO
+)
 endif()
