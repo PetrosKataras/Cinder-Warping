@@ -360,6 +360,7 @@ WarpList Warp::readSettings( const DataSourceRef &source )
 
 		// iterate maps
 		for( XmlTree::ConstIter child = profileXml.begin( "map" ); child != profileXml.end(); ++child ) {
+			auto id = child->getAttributeValue<uint32_t>("id");
 			XmlTree warpXml = child->getChild( "warp" );
 
 			// create warp of the correct type
@@ -379,6 +380,7 @@ WarpList Warp::readSettings( const DataSourceRef &source )
 				warp->fromXml( warpXml );
 				warps.push_back( warp );
 			}
+			if( warps.size() > 0 ) warps.back()->setId( id );
 		}
 	}
 
